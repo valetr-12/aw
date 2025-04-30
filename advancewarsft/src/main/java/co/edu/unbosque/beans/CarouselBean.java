@@ -3,15 +3,13 @@ package co.edu.unbosque.beans;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.view.ViewScoped;
-import jakarta.inject.Named;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@ManagedBean
+@ManagedBean(name="carouselBean")
 @ViewScoped
-@Named("carouselBean")
 public class CarouselBean implements Serializable {
     /**
 	 * 
