@@ -1,45 +1,34 @@
 package co.edu.unbosque.beans;
 
-import jakarta.annotation.PostConstruct;
-import jakarta.faces.bean.ManagedBean;
+import jakarta.inject.Named;
 import jakarta.faces.view.ViewScoped;
-
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-@ManagedBean(name="carouselBean")
+@Named("carouselBean")
 @ViewScoped
 public class CarouselBean implements Serializable {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private List<Item> items;
 
-    @PostConstruct
-    public void init() {
-        items = new ArrayList<>();
-        items.add(new Item("Images/ima1.png"));
-        items.add(new Item("Images/ima2.png"));
-        items.add(new Item("Images/ima3.png"));
-        items.add(new Item("Images/ima1.png"));
-        // Puedes añadir más imágenes si quieres
+    private List<String> imageUrls;
+
+    public CarouselBean() {
+        imageUrls = Arrays.asList(
+            "Images/ima1.png",
+            "Images/ima1.png",
+            "Images/ima1.png",
+            "Images/ima1.png",
+            "Images/ima1.png"
+        );
     }
 
-    public List<Item> getItems() {
-        return items;
+    public List<String> getImageUrls() {
+        return imageUrls;
     }
 
-    public static class Item {
-        private String imagePath;
-
-        public Item(String imagePath) {
-            this.imagePath = imagePath;
-        }
-
-        public String getImagePath() {
-            return imagePath;
-        }
+    public void setImageUrls(List<String> imageUrls) {
+        this.imageUrls = imageUrls;
     }
 }
+
+
