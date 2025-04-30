@@ -9,6 +9,41 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+ <h:form>
+        <p:carousel value="#{carouselBean.items}" var="item" circular="true" autoplayInterval="3000" numVisible="3" responsive="true" styleClass="diagonal-carousel">
+            <h:panelGroup layout="block" styleClass="carousel-item">
+                <h:graphicImage value="#{item.imagePath}" styleClass="carousel-image"/>
+            </h:panelGroup>
+        </p:carousel>
+    </h:form>
 </body>
+<style>
+/* Estilo diagonal personalizado */
+.diagonal-carousel .ui-carousel-items {
+    display: flex;
+    animation: diagonal-scroll 20s linear infinite;
+}
+
+.carousel-item {
+    transform: rotate(-10deg); /* inclinación diagonal */
+    padding: 10px;
+}
+
+.carousel-image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Animación para desplazamiento diagonal */
+@keyframes diagonal-scroll {
+    0% {
+        transform: translateX(0) translateY(0);
+    }
+    100% {
+        transform: translateX(-50%) translateY(-50%);
+    }
+}
+
+</style>
 </html>
