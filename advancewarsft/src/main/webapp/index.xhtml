@@ -10,21 +10,22 @@
 body {
 	margin: 0;
 	padding: 0;
-	background-image: url("#{resource['images/fondo.png']}");
-	background-size: cover;
-	background-position: center;
+	background-image: url("Images/index.png");
 	height: 100vh;
 	font-family: Arial, sans-serif;
+	background-size: 100%; /* Reduce el tamaño */
+	background-repeat: no-repeat;
+	background-position: center;
 }
 
 .menu-container {
+	position: absolute;
+	bottom: 140px;
+	left: 12%;
 	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	justify-content: flex-end;
-	height: 100vh;
-	padding-left: 40px;
-	padding-bottom: 50px;
+	flex-direction: row;
+	align-items: center; /* Centrar los botones */
+	gap: 75px; /* Espacio entre botones */
 }
 
 .title {
@@ -35,44 +36,220 @@ body {
 	z-index: 1;
 }
 
-.btn-orange {
-	background-color: #f97316;
-	border: none;
-	color: white;
-	padding: 10px 30px;
-	font-size: 18px;
-	margin-bottom: 20px;
+.ui-button.btn-orange, .ui-button.btn-blue {
+	border: 3px solid black; /* Borde negro */
+	color: black;
+	width: 210px; /* Establecemos un ancho fijo */
+	height: 60px; /* Establecemos una altura fija */
+	font-size: 25px;
+	font-family: 'Times New Roman', serif;
 	border-radius: 10px;
 	cursor: pointer;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: all 0.3s ease; /* Transición para el hover */
 }
 
-.btn-blue {
-	background-color: #2563eb;
-	border: none;
-	color: white;
-	padding: 10px 30px;
-	font-size: 18px;
-	border-radius: 10px;
+.ui-button.btn-orange {
+	background-color: #f97316; /* Naranja */
+}
+
+.ui-button.btn-blue {
+	background-color: #2563eb; /* Azul */
+}
+
+.ui-button:hover {
+	opacity: 0.9; /* Efecto de opacidad */
+	border-color: black; /* Mantener el borde negro en hover */
+}
+
+.ui-button.btn-orange:hover {
+	background-color: #e66a0e; /* Color más oscuro para el hover */
+}
+
+.ui-button.btn-blue:hover {
+	background-color: #1e4bb7; /* Color más oscuro para el hover */
+}
+
+/* Estilo para los formularios dentro del modal */
+/* Fondo del contenedor */
+.form-container {
+    background-color: #edd4bc;
+    padding: 20px;
+    border-radius: 20px;
+    font-family: 'Georgia', serif;
+    text-align: center;
+    position: relative;
+}
+
+/* Títulos */
+.form-container h2 {
+    margin-bottom: 15px;
+}
+
+/* Etiquetas */
+.form-container label {
+    font-family: 'Georgia', serif;
+    font-size: 18px;
+}
+
+/* Inputs centrados y completos */
+.form-input {
+    width: 85% !important;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #999;
+    margin: 5px auto 15px auto;
+    display: block;
+    box-sizing: border-box;
+}
+
+/* Estilo general para botones */
+.form-container .ui-button {
+    font-family: 'Georgia', serif;
+    font-size: 14px;
+    background-color: #f3e3d3 !important;
+    border: 1px solid black !important;
+    border-radius: 10px !important;
+    padding: 6px 12px !important;
+    box-shadow: none !important;
+    cursor: pointer;
+    color: #000 !important;
+}
+
+/* Alinear los botones horizontalmente */
+.form-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+/* Botón de cerrar (la X) */
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 18px;
+    cursor: pointer;
+    color: #333;
+}
+
+.close-button:hover {
+    color: #000;
+}
+
+/* Eliminar bordes del diálogo */
+.ui-dialog .ui-dialog-content {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+}
+
+.ui-dialog {
+    box-shadow: none !important;
+    border: none !important;
+    background: transparent !important;
+}
+
+/* Botones transparentes */
+.transparent-button {
+	background-color: transparent !important;
+	border: none !important;
+	box-shadow: none !important;
+	color: inherit !important;
+	font-family: inherit;
+	font-size: inherit;
+	padding: 8px 16px;
 	cursor: pointer;
+	margin: 10px 5px;
 }
 
-.btn-orange:hover, .btn-blue:hover {
-	opacity: 0.9;
+.transparent-button:hover, .transparent-button:focus,
+	.transparent-button:active {
+	background-color: transparent !important;
+	color: inherit !important;
+	border: none !important;
+	box-shadow: none !important;
+	outline: none !important;
+}
+
+.close-button {
+	position: absolute;
+	top: 10px;
+	right: 15px;
+	font-size: 18px;
+	cursor: pointer;
+	color: #333;
+}
+
+.close-button:hover {
+	color: #000;
 }
 </style>
 </h:head>
 <h:body>
-	<div class="title">
-		<h:graphicImage name="images/logo_advancewars.png" width="500px" />
-	</div>
 
 	<div class="menu-container">
-		<h:form>
-			<p:commandButton value="1 Player" styleClass="btn-orange"
-				action="#{menuView.onePlayer}" />
-			<p:commandButton value="Multiplayer" styleClass="btn-blue"
-				action="#{menuView.multiplayer}" />
-		</h:form>
+		<p:commandButton value="1 Player" styleClass="btn-orange"
+			onclick="PF('loginDialog').show();" />
+		<p:commandButton value="Multiplayer" styleClass="btn-blue" />
 	</div>
+	<!-- Diálogo de Inicio de Sesión -->
+	<h:form id="iniciarSesionForm">
+		<p:dialog widgetVar="loginDialog" modal="true" width="400"
+			showHeader="false" closable="false" draggable="false"
+			resizable="false">
+			<div class="form-container">
+				<span class="close-button" onclick="PF('loginDialog').hide()">✖</span>
+				<h2>Inicio de sesión</h2>
+				<h:outputLabel for="username" value="Usuario" />
+				<h:inputText id="username" value="#{bean.username}"
+					styleClass="form-input" />
+				<h:outputLabel for="password" value="Contraseña" />
+				<h:inputSecret id="password" value="#{bean.password}"
+					styleClass="form-input" />
+
+				<div class="form-buttons">
+					<p:commandButton value="Iniciar sesión" action="#{bean.login}"
+						update=":iniciarSesionForm" />
+					<p:commandButton value="Registrarse"
+						onclick="PF('loginDialog').hide(); PF('registerDialog').show();"
+						type="button" />
+				</div>
+			</div>
+		</p:dialog>
+	</h:form>
+
+	<!-- Diálogo de Registro -->
+	<h:form id="registrarseForm">
+		<p:dialog widgetVar="registerDialog" modal="true" width="400"
+			showHeader="false" closable="false" draggable="false"
+			resizable="false" visible="false">
+			<div class="form-container">
+				<span class="close-button" onclick="PF('registerDialog').hide()">✖</span>
+				<h2>Registro</h2>
+				<h:outputLabel for="registerUsername" value="Usuario" />
+				<h:inputText id="registerUsername" value="#{bean.registerUsername}"
+					styleClass="form-input" />
+
+				<h:outputLabel for="registerPassword" value="Contraseña" />
+				<h:inputSecret id="registerPassword"
+					value="#{bean.registerPassword}" styleClass="form-input" />
+
+				<h:outputLabel for="confirmPassword" value="Confirmar contraseña" />
+				<h:inputSecret id="confirmPassword" value="#{bean.confirmPassword}"
+					styleClass="form-input" />
+
+				<div class="form-buttons">
+					<p:commandButton value="Registrarse" action="#{bean.register}"
+						update=":registrarseForm" onclick="PF('registerDialog').hide(); PF('loginDialog').show();"/>
+				</div>
+			</div>
+		</p:dialog>
+	</h:form>
+
 </h:body>
 </html>
