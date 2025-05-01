@@ -10,15 +10,19 @@ import java.util.List;
 @ViewScoped
 public class CarouselBean implements Serializable {
 
-    private List<String> imageUrls;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private List<String> imageUrls;
 
     public CarouselBean() {
         imageUrls = Arrays.asList(
-            "Images/ima1.png",
-            "Images/ima1.png",
-            "Images/ima1.png",
-            "Images/ima1.png",
-            "Images/ima1.png"
+            "Images/mision1.png",
+            "Images/mision2.png",
+            "Images/mision3.png",
+            "Images/mision4.png",
+            "Images/mision3.png"
         );
     }
 

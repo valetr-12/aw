@@ -1,104 +1,80 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <h:head>
-<style>
-body {
-	margin: 0;
-	background: #111;
-	font-family: Arial, sans-serif;
-}
+    <title>Carrusel Diagonal Infinito</title>
+    <style>
+        body {
+            margin: 0;
+            background: #111;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
 
-.carousel-wrapper {
-	position: relative;
-	width: 100%;
-	overflow: hidden;
-	padding: 60px 0;
-}
+        .carousel-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-.carousel-container {
-	display: flex;
-	gap: 40px;
-	transition: transform 0.5s ease;
-	transform: rotate(-10deg) skew(-10deg);
-}
+        .carousel-track {
+            display: flex;
+            gap: 50px;
+            animation: scroll 20s linear infinite;
+            transform: rotate(-10deg) skew(-10deg);
+        }
 
-.carousel-item {
-	min-width: 300px;
-	height: 200px;
-	background: #fff;
-	border-radius: 15px;
-	overflow: hidden;
-	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
-	transform: skew(10deg) rotate(10deg);
-}
+        .carousel-item {
+            min-width: 300px;
+            height: 200px;
+            background-color: #fff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            transform: skew(10deg) rotate(10deg);
+            transition: transform 0.3s;
+        }
 
-.carousel-item img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-}
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-.arrow {
-	position: absolute;
-	top: 50%;
-	transform: translateY(-50%);
-	font-size: 40px;
-	color: white;
-	background: rgba(0, 0, 0, 0.4);
-	border: none;
-	padding: 10px;
-	cursor: pointer;
-	z-index: 100;
-}
+        .carousel-item:hover {
+            transform: scale(1.05) skew(10deg) rotate(10deg);
+        }
 
-.left-arrow {
-	left: 10px;
-}
-
-.right-arrow {
-	right: 10px;
-}
-</style>
+        @keyframes scroll {
+            0% {
+                transform: translate(0, 0) rotate(-10deg) skew(-10deg);
+            }
+            100% {
+                transform: translate(-50%, 50%) rotate(-10deg) skew(-10deg);
+            }
+        }
+    </style>
 </h:head>
-
 <h:body>
-	<div class="carousel-wrapper">
-		<button class="arrow left-arrow" onclick="moveCarousel(-1)">&#10094;</button>
-		<button class="arrow right-arrow" onclick="moveCarousel(1)">&#10095;</button>
-
-		<div id="carousel" class="carousel-container">
-			<ui:repeat value="#{carouselBean.imageUrls}" var="img">
-				<div class="carousel-item">
-					<img src="#{img}" alt="Imagen" />
-				</div>
-			</ui:repeat>
-		</div>
-	</div>
-
-	<script>
-	let position = 0;
-	const carousel = document.getElementById("carousel");
-
-	function moveCarousel(direction) {
-		const itemWidth = 340; // 300px width + 40px gap
-		position += direction * itemWidth;
-
-		// Límite izquierdo
-		if (position > 0)
-			position = 0;
-
-		// Límite derecho
-		const maxScroll = -((carousel.children.length * itemWidth) - window.innerWidth + 100);
-		if (position < maxScroll)
-			position = maxScroll;
-
-		carousel.style.transform = "translateX(" + position + "px) rotate(-10deg) skew(-10deg)";
-	}
-</script>
-
+    <div class="carousel-container">
+        <div class="carousel-track">
+            <ui:repeat value="#{carouselBean.imageUrls}" var="img">
+                <div class="carousel-item">
+                    <img src="#{img}" alt="Imagen" />
+                </div>
+            </ui:repeat>
+            <!-- Repetimos una vez más para efecto infinito visual -->
+            <ui:repeat value="#{carouselBean.imageUrls}" var="img">
+                <div class="carousel-item">
+                    <img src="#{img}" alt="Imagen" />
+                </div>
+            </ui:repeat>
+        </div>
+    </div>
 </h:body>
 </html>
