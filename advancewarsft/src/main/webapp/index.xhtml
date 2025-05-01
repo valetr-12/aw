@@ -5,100 +5,251 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
-<style>
+	<title>Advance Wars 1+2 Re-Boot</title>
+	<style>
 body {
 	margin: 0;
-	background: #111;
+	padding: 0;
+	background-image: url("Images/index.png");
+	height: 100vh;
 	font-family: Arial, sans-serif;
+	background-size: 100%; /* Reduce el tamaño */
+	background-repeat: no-repeat;
+	background-position: center;
 }
 
-.carousel-wrapper {
-	position: relative;
-	width: 100%;
-	overflow: hidden;
-	padding: 60px 0;
-}
-
-.carousel-container {
-	display: flex;
-	gap: 40px;
-	transition: transform 0.5s ease;
-	transform: rotate(-10deg) skew(-10deg);
-}
-
-.carousel-item {
-	min-width: 300px;
-	height: 200px;
-	background: #fff;
-	border-radius: 15px;
-	overflow: hidden;
-	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
-	transform: skew(10deg) rotate(10deg);
-}
-
-.carousel-item img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-}
-
-.arrow {
+.menu-container {
 	position: absolute;
-	top: 50%;
-	transform: translateY(-50%);
-	font-size: 40px;
-	color: white;
-	background: rgba(0, 0, 0, 0.4);
-	border: none;
-	padding: 10px;
+	bottom: 140px;
+	left: 12%;
+	display: flex;
+	flex-direction: row;
+	align-items: center; /* Centrar los botones */
+	gap: 75px; /* Espacio entre botones */
+}
+
+.title {
+	position: absolute;
+	top: 50px;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 1;
+}
+
+.ui-button.btn-orange, .ui-button.btn-blue {
+	border: 3px solid black; /* Borde negro */
+	color: black;
+	width: 210px; /* Establecemos un ancho fijo */
+	height: 60px; /* Establecemos una altura fija */
+	font-size: 25px;
+	font-family: 'Times New Roman', serif;
+	border-radius: 10px;
 	cursor: pointer;
-	z-index: 100;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: all 0.3s ease; /* Transición para el hover */
 }
 
-.left-arrow {
-	left: 10px;
+.ui-button.btn-orange {
+	background-color: #f97316; /* Naranja */
 }
 
-.right-arrow {
-	right: 10px;
+.ui-button.btn-blue {
+	background-color: #2563eb; /* Azul */
+}
+
+.ui-button:hover {
+	opacity: 0.9; /* Efecto de opacidad */
+	border-color: black; /* Mantener el borde negro en hover */
+}
+
+.ui-button.btn-orange:hover {
+	background-color: #e66a0e; /* Color más oscuro para el hover */
+}
+
+.ui-button.btn-blue:hover {
+	background-color: #1e4bb7; /* Color más oscuro para el hover */
+}
+
+/* Estilo para los formularios dentro del modal */
+/* Fondo del contenedor */
+.form-container {
+    background-color: #edd4bc;
+    padding: 20px;
+    border-radius: 20px;
+    font-family: 'Georgia', serif;
+    text-align: center;
+    position: relative;
+}
+
+/* Títulos */
+.form-container h2 {
+    margin-bottom: 15px;
+}
+
+/* Etiquetas */
+.form-container label {
+    font-family: 'Georgia', serif;
+    font-size: 18px;
+}
+
+/* Inputs centrados y completos */
+.form-input {
+    width: 85% !important;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #999;
+    margin: 5px auto 15px auto;
+    display: block;
+    box-sizing: border-box;
+}
+
+/* Estilo general para botones */
+.form-container .ui-button {
+    font-family: 'Georgia', serif;
+    font-size: 14px;
+    background-color: #f3e3d3 !important;
+    border: 1px solid black !important;
+    border-radius: 10px !important;
+    padding: 6px 12px !important;
+    box-shadow: none !important;
+    cursor: pointer;
+    color: #000 !important;
+}
+
+/* Alinear los botones horizontalmente */
+.form-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+/* Botón de cerrar (la X) */
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 18px;
+    cursor: pointer;
+    color: #333;
+}
+
+.close-button:hover {
+    color: #000;
+}
+
+/* Eliminar bordes del diálogo */
+.ui-dialog .ui-dialog-content {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+}
+
+.ui-dialog {
+    box-shadow: none !important;
+    border: none !important;
+    background: transparent !important;
+}
+
+/* Botones transparentes */
+.transparent-button {
+	background-color: transparent !important;
+	border: none !important;
+	box-shadow: none !important;
+	color: inherit !important;
+	font-family: inherit;
+	font-size: inherit;
+	padding: 8px 16px;
+	cursor: pointer;
+	margin: 10px 5px;
+}
+
+.transparent-button:hover, .transparent-button:focus,
+	.transparent-button:active {
+	background-color: transparent !important;
+	color: inherit !important;
+	border: none !important;
+	box-shadow: none !important;
+	outline: none !important;
+}
+
+.close-button {
+	position: absolute;
+	top: 10px;
+	right: 15px;
+	font-size: 18px;
+	cursor: pointer;
+	color: #333;
+}
+
+.close-button:hover {
+	color: #000;
 }
 </style>
 </h:head>
-
 <h:body>
-	<div class="carousel-wrapper">
-		<button class="arrow left-arrow" onclick="moveCarousel(-1)">&#10094;</button>
-		<button class="arrow right-arrow" onclick="moveCarousel(1)">&#10095;</button>
 
-		<div id="carousel" class="carousel-container">
-			<ui:repeat value="#{carouselBean.imageUrls}" var="img">
-				<div class="carousel-item">
-					<img src="#{img}" alt="Imagen" />
-				</div>
-			</ui:repeat>
-		</div>
+	<div class="menu-container">
+		<p:commandButton value="1 Player" styleClass="btn-orange"
+			onclick="PF('loginDialog').show();" />
+		<p:commandButton value="Multiplayer" styleClass="btn-blue" />
 	</div>
+	<!-- Diálogo de Inicio de Sesión -->
+	<h:form id="iniciarSesionForm">
+		<p:dialog widgetVar="loginDialog" modal="true" width="400"
+			showHeader="false" closable="false" draggable="false"
+			resizable="false">
+			<div class="form-container">
+				<span class="close-button" onclick="PF('loginDialog').hide()">✖</span>
+				<h2>Inicio de sesión</h2>
+				<h:outputLabel for="username" value="Usuario" />
+				<h:inputText id="username" value="#{bean.username}"
+					styleClass="form-input" />
+				<h:outputLabel for="password" value="Contraseña" />
+				<h:inputSecret id="password" value="#{bean.password}"
+					styleClass="form-input" />
 
-	<script>
-	let position = 0;
-	const carousel = document.getElementById("carousel");
+				<div class="form-buttons">
+					<p:commandButton value="Iniciar sesión" action="#{bean.login}"
+						update=":iniciarSesionForm" />
+					<p:commandButton value="Registrarse"
+						onclick="PF('loginDialog').hide(); PF('registerDialog').show();"
+						type="button" />
+				</div>
+			</div>
+		</p:dialog>
+	</h:form>
 
-	function moveCarousel(direction) {
-		const itemWidth = 340; // 300px width + 40px gap
-		position += direction * itemWidth;
+	<!-- Diálogo de Registro -->
+	<h:form id="registrarseForm">
+		<p:dialog widgetVar="registerDialog" modal="true" width="400"
+			showHeader="false" closable="false" draggable="false"
+			resizable="false" visible="false">
+			<div class="form-container">
+				<span class="close-button" onclick="PF('registerDialog').hide()">✖</span>
+				<h2>Registro</h2>
+				<h:outputLabel for="registerUsername" value="Usuario" />
+				<h:inputText id="registerUsername" value="#{bean.registerUsername}"
+					styleClass="form-input" />
 
-		// Límite izquierdo
-		if (position > 0)
-			position = 0;
+				<h:outputLabel for="registerPassword" value="Contraseña" />
+				<h:inputSecret id="registerPassword"
+					value="#{bean.registerPassword}" styleClass="form-input" />
 
-		// Límite derecho
-		const maxScroll = -((carousel.children.length * itemWidth) - window.innerWidth + 100);
-		if (position < maxScroll)
-			position = maxScroll;
+				<h:outputLabel for="confirmPassword" value="Confirmar contraseña" />
+				<h:inputSecret id="confirmPassword" value="#{bean.confirmPassword}"
+					styleClass="form-input" />
 
-		carousel.style.transform = "translateX(" + position + "px) rotate(-10deg) skew(-10deg)";
-	}
-</script>
+				<div class="form-buttons">
+					<p:commandButton value="Registrarse" action="#{bean.register}"
+						update=":registrarseForm" onclick="PF('registerDialog').hide(); PF('loginDialog').show();"/>
+				</div>
+			</div>
+		</p:dialog>
+	</h:form>
 
 </h:body>
 </html>
