@@ -5,9 +5,26 @@
 <h:head>
     <title>Carrusel Diagonal Fijo</title>
 
+    <title>Carrusel Diagonal Infinito</title>
+    <style>
+        body {
+            margin: 0;
+            background: #111;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-XyBxj+AzFBrCR1m2ZzZSy5zqL0xkSnWZbC1ugVVRCHu4TXDUWqMZfRn9ZygE7Uu9e8ZrMJpK60Er6fXWW5P7Zg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+        .carousel-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     <style>
         body {
             margin: 0;
@@ -19,8 +36,13 @@
             background-repeat: no-repeat;
             background-position: center top;
             overflow: hidden;
-        }
 
+        .carousel-track {
+            display: flex;
+            gap: 50px;
+            animation: scroll 20s linear infinite;
+            transform: rotate(-10deg) skew(-10deg);
+        }
         .logout-icon {
             position: fixed;
             top: 20px;
@@ -33,11 +55,26 @@
             padding: 10px;
             border-radius: 50%;
             transition: background 0.3s, transform 0.3s;
+
+        .carousel-item {
+            min-width: 300px;
+            height: 200px;
+            background-color: #fff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            transform: skew(10deg) rotate(10deg);
+            transition: transform 0.3s;
         }
 
         .logout-icon:hover {
             background: rgba(255, 255, 255, 0.9);
             transform: scale(1.1);
+
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .carousel-container {
@@ -48,6 +85,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
+
+        .carousel-item:hover {
+            transform: scale(1.05) skew(10deg) rotate(10deg);
         }
 
         .carousel-wrapper {
@@ -116,11 +156,18 @@
             }
             100% {
                 transform: translateX(50%);
+
+        @keyframes scroll {
+            0% {
+                transform: translate(0, 0) rotate(-10deg) skew(-10deg);
+            }
+            100% {
+                transform: translate(-50%, 50%) rotate(-10deg) skew(-10deg);
+
             }
         }
     </style>
 </h:head>
-
 <h:body>
     <!-- Ícono de logout -->
     <a href="logout.xhtml" title="Cerrar sesión">
@@ -158,5 +205,21 @@
             track.style.animationPlayState = "running";
         }
     </h:outputScript>
+
+    <div class="carousel-container">
+        <div class="carousel-track">
+            <ui:repeat value="#{carouselBean.imageUrls}" var="img">
+                <div class="carousel-item">
+                    <img src="#{img}" alt="Imagen" />
+                </div>
+            </ui:repeat>
+            <!-- Repetimos una vez más para efecto infinito visual -->
+            <ui:repeat value="#{carouselBean.imageUrls}" var="img">
+                <div class="carousel-item">
+                    <img src="#{img}" alt="Imagen" />
+                </div>
+            </ui:repeat>
+        </div>
+    </div>
 </h:body>
 </html>

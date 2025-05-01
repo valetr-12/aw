@@ -11,7 +11,11 @@ import java.util.List;
 @ViewScoped
 public class CarouselBean implements Serializable {
 
-    private List<String> imageUrls;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private List<String> imageUrls;
 
     public CarouselBean() {
         imageUrls = new ArrayList<>(Arrays.asList(
@@ -26,6 +30,13 @@ public class CarouselBean implements Serializable {
         List<String> duplicatedImages = new ArrayList<>(imageUrls);
         duplicatedImages.addAll(imageUrls);  // Duplicamos las imágenes
         imageUrls = duplicatedImages;
+        imageUrls = Arrays.asList(
+            "Images/mision1.png",
+            "Images/mision2.png",
+            "Images/mision3.png",
+            "Images/mision4.png",
+            "Images/mision3.png"
+        );
     }
 
     public List<String> getImageUrls() {
