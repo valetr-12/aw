@@ -1,104 +1,162 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <h:head>
-<style>
-body {
-	margin: 0;
-	background: #111;
-	font-family: Arial, sans-serif;
-}
+    <title>Carrusel Diagonal Fijo</title>
 
-.carousel-wrapper {
-	position: relative;
-	width: 100%;
-	overflow: hidden;
-	padding: 60px 0;
-}
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-XyBxj+AzFBrCR1m2ZzZSy5zqL0xkSnWZbC1ugVVRCHu4TXDUWqMZfRn9ZygE7Uu9e8ZrMJpK60Er6fXWW5P7Zg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-.carousel-container {
-	display: flex;
-	gap: 40px;
-	transition: transform 0.5s ease;
-	transform: rotate(-10deg) skew(-10deg);
-}
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url("Images/fondoo.png");
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-size: 100% auto;
+            background-repeat: no-repeat;
+            background-position: center top;
+            overflow: hidden;
+        }
 
-.carousel-item {
-	min-width: 300px;
-	height: 200px;
-	background: #fff;
-	border-radius: 15px;
-	overflow: hidden;
-	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
-	transform: skew(10deg) rotate(10deg);
-}
+        .logout-icon {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 28px;
+            z-index: 9999; /* Muy alto para asegurarse de que esté por encima */
+            cursor: pointer;
+            color: #000;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 10px;
+            border-radius: 50%;
+            transition: background 0.3s, transform 0.3s;
+        }
 
-.carousel-item img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-}
+        .logout-icon:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: scale(1.1);
+        }
 
-.arrow {
-	position: absolute;
-	top: 50%;
-	transform: translateY(-50%);
-	font-size: 40px;
-	color: white;
-	background: rgba(0, 0, 0, 0.4);
-	border: none;
-	padding: 10px;
-	cursor: pointer;
-	z-index: 100;
-}
+        .carousel-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-.left-arrow {
-	left: 10px;
-}
+        .carousel-wrapper {
+            transform: rotate(-25deg) skew(-25deg);
+        }
 
-.right-arrow {
-	right: 10px;
-}
-</style>
+        .carousel-track {
+            display: flex;
+            gap: 110px;
+            padding-left: 100vw;
+            width: max-content;
+            animation: scroll-horizontal 20s linear infinite reverse; /* Dirección hacia la derecha */
+        }
+
+        .carousel-item {
+            width: 270px;
+            height: 230px;
+            background-color: #fff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            transform: skew(25deg) rotate(25deg);
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            text-align: center;
+            position: relative;
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.5s ease;
+        }
+
+        .carousel-item-title {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            color: #000;
+            font-size: 20px;
+            padding: 16px 32px;
+            border-radius: 8px;
+        }
+
+        .carousel-item:hover img {
+            opacity: 0.3;
+        }
+
+        .carousel-item:hover .carousel-item-title {
+            opacity: 1;
+        }
+
+        .carousel-item:hover {
+            transform: scale(1.05) skew(25deg) rotate(25deg);
+        }
+
+        @keyframes scroll-horizontal {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(50%);
+            }
+        }
+    </style>
 </h:head>
 
 <h:body>
-	<div class="carousel-wrapper">
-		<button class="arrow left-arrow" onclick="moveCarousel(-1)">&#10094;</button>
-		<button class="arrow right-arrow" onclick="moveCarousel(1)">&#10095;</button>
+    <!-- Ícono de logout -->
+    <a href="logout.xhtml" title="Cerrar sesión">
+        <i class="fa-solid fa-right-from-bracket fa-flip-horizontal logout-icon"></i>
+    </a>
 
-		<div id="carousel" class="carousel-container">
-			<ui:repeat value="#{carouselBean.imageUrls}" var="img">
-				<div class="carousel-item">
-					<img src="#{img}" alt="Imagen" />
-				</div>
-			</ui:repeat>
-		</div>
-	</div>
+    <!-- Carrusel -->
+    <div class="carousel-container">
+        <div class="carousel-wrapper">
+            <div class="carousel-track" id="carouselTrack">
+                <ui:repeat value="#{carouselBean.imageUrls}" var="img">
+                    <div class="carousel-item" onmouseover="pauseScroll()" onmouseout="resumeScroll()">
+                        <img src="#{img}" alt="Imagen" />
+                        <div class="carousel-item-title">Título de la Imagen</div>
+                    </div>
+                </ui:repeat>
+                <ui:repeat value="#{carouselBean.imageUrls}" var="img">
+                    <div class="carousel-item" onmouseover="pauseScroll()" onmouseout="resumeScroll()">
+                        <img src="#{img}" alt="Imagen" />
+                        <div class="carousel-item-title">Título de la Imagen</div>
+                    </div>
+                </ui:repeat>
+            </div>
+        </div>
+    </div>
 
-	<script>
-	let position = 0;
-	const carousel = document.getElementById("carousel");
+    <h:outputScript>
+        let track = document.getElementById("carouselTrack");
 
-	function moveCarousel(direction) {
-		const itemWidth = 340; // 300px width + 40px gap
-		position += direction * itemWidth;
+        function pauseScroll() {
+            track.style.animationPlayState = "paused";
+        }
 
-		// Límite izquierdo
-		if (position > 0)
-			position = 0;
-
-		// Límite derecho
-		const maxScroll = -((carousel.children.length * itemWidth) - window.innerWidth + 100);
-		if (position < maxScroll)
-			position = maxScroll;
-
-		carousel.style.transform = "translateX(" + position + "px) rotate(-10deg) skew(-10deg)";
-	}
-</script>
-
+        function resumeScroll() {
+            track.style.animationPlayState = "running";
+        }
+    </h:outputScript>
 </h:body>
 </html>
